@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
 
-exports.signup = async function (req, res, next) {
+exports.signup = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         const err = new Error('Validation error');
@@ -70,5 +70,11 @@ exports.login = async (req, res, next) => {
         userId: user._id.toString(),
         accessToken: accessToken,
         refreshToken: refreshToken
+    });
+};
+
+exports.check = async (req, res, next) => {
+    return res.status(200).json({
+        message: "ACCESSED WITH TOKEN"
     });
 }
