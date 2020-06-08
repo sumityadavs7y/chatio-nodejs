@@ -7,12 +7,14 @@ require('dotenv').config();
 const app = express();
 
 const authRoutes = require('./routes/auth');
+const chatRoutes = require('./routes/chat');
 
 app.use(bodyParser.json());
 
 app.use(cors());
 
 app.use('/auth', authRoutes);
+app.use('/chat', chatRoutes);
 
 app.use((error, req, res, next) => {
     // console.error(error);
