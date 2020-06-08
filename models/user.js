@@ -15,6 +15,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    contacts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     refreshTokens: [{
         expireTime: {
             type: Date,
