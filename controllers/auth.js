@@ -69,7 +69,9 @@ exports.login = async (req, res, next) => {
     return res.status(200).json({
         userId: user._id.toString(),
         accessToken: accessToken,
-        refreshToken: refreshToken
+        refreshToken: refreshToken,
+        expiresIn: 60,
+        email: user.email
     });
 };
 

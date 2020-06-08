@@ -13,7 +13,9 @@ router.post('/signup', [
 ],
     authController.signup);
 
-router.post('/login', authController.login);
+router.post('/login', [
+    body('email').isEmail().normalizeEmail()
+], authController.login);
 
 router.post('/check', isAuth, authController.check);
 
