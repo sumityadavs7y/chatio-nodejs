@@ -13,12 +13,7 @@ exports.getContacts = async (req, res, next) => {
         err.statusCode = 404;
         return next(err);
     }
-    const contacts = user.contacts.map(c => {
-        return {
-            id: c._id,
-            email: c.email
-        }
-    });
+    const contacts = user.contacts;
     return res.status(200).json({
         contacts: contacts
     });
