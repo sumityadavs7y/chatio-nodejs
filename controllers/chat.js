@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
 exports.getContacts = async (req, res, next) => {
-    const user = await User.findById(req.userId).populate('contacts', '_id email');
+    const user = await User.findById(req.userId).populate('contacts', '_id email name');
     if (!user) {
         const err = new Error('User not found');
         err.statusCode = 404;
