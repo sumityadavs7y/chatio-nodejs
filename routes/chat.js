@@ -17,8 +17,6 @@ router.post('/message', isAuth, [
     body('contact').isEmail().normalizeEmail()
 ], chatController.postMessage);
 
-router.post('/messages', isAuth, [
-    body('contact').isLength({ min: 1 })
-], chatController.getMessages);
+router.get('/messages/:contactId', isAuth, chatController.getMessages);
 
 module.exports = router;

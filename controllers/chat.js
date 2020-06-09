@@ -99,7 +99,7 @@ exports.getMessages = async (req, res, next) => {
         return next(err);
     }
 
-    const contactUser = await User.findById(req.body.contact);
+    const contactUser = await User.findById(req.params.contactId);
     const user = await User.findById(req.userId);
 
     if (!contactUser || contactUser._id.toString() === req.userId) {
@@ -123,7 +123,7 @@ exports.getMessages = async (req, res, next) => {
         },
         {
             $sort: {
-                createdAt: -1
+                createdAt: 1
             }
         },
         {
@@ -142,7 +142,8 @@ exports.getMessages = async (req, res, next) => {
         }
     ]);
     return res.status(200).json({
-        message: "All OK",
+        name: contactUser.name,
+        email: contactUser.email,
         messages: messages
     });
 }
