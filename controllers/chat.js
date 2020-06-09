@@ -44,12 +44,20 @@ exports.postContact = async (req, res, next) => {
         err.statusCode = 400;
         return next(err);
     }
-
     const user = await User.findById(req.userId);
+
+    if (checkUser._id.toString() === user._id.toString()) {
+        const err = new Error('Can\'t add yourself to contact');
+        err.statusCode = 400;
+        return next(err);
+    }
+
     user.contacts.push(contactUser._id)
     await user.save();
     return res.status(200).json({
-        message: 'Added to contacts'
+        _id: contactUser._id,
+        email: contactUser.email,
+        name: contactUser.name
     });
 };
 
