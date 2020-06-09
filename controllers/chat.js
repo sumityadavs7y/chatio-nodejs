@@ -99,11 +99,8 @@ exports.getMessages = async (req, res, next) => {
         return next(err);
     }
 
-    const contactUser = await User.findOne({ email: req.body.contact });
+    const contactUser = await User.findById(req.body.contact);
     const user = await User.findById(req.userId);
-
-    await User.updateOne({ _id: user._id }, { "$addToSet": { "contacts": contactUser._id } });
-    await User.updateOne({ _id: contactUser._id }, { "$addToSet": { "contacts": user._id } });
 
     if (!contactUser || contactUser._id.toString() === req.userId) {
         const message = !contactUser ? 'User not found' : 'Can\'t find chat with yourself';
@@ -111,6 +108,9 @@ exports.getMessages = async (req, res, next) => {
         err.statusCode = !contactUser ? 404 : 400;
         return next(err);
     }
+
+    await User.updateOne({ _id: user._id }, { "$addToSet": { "contacts": contactUser._id } });
+    await User.updateOne({ _id: contactUser._id }, { "$addToSet": { "contacts": user._id } });
 
     const messages = await Message.aggregate([
         {
