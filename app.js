@@ -9,9 +9,9 @@ const app = express();
 const authRoutes = require('./routes/auth');
 const chatRoutes = require('./routes/chat');
 
-app.use(bodyParser.json());
-
 app.use(cors());
+
+app.use(bodyParser.json());
 
 app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
@@ -34,5 +34,9 @@ mongoose.connect(process.env.MONGODB_URI,
     }).then(result => {
         console.log('DATABASE CONNECTED');
         console.log(process.env.PORT);
-        app.listen(process.env.PORT || 8080);
+        const server = app.listen(process.env.PORT || 8080);
+        const io = require('./socket').init(server);
+        io.on('connection', socket => {
+            console.log('Client Connected');
+        });
     }).catch(err => console.error(err));

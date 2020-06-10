@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
+const io = require('../socket');
 
 const User = require('../models/user');
 
@@ -76,6 +77,10 @@ exports.login = async (req, res, next) => {
 };
 
 exports.check = async (req, res, next) => {
+
+    io.getIO().to('mychannel')
+        .emit('message', 'hi, there!');
+
     return res.status(200).json({
         message: "ACCESSED WITH TOKEN"
     });

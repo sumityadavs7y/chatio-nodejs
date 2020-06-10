@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 
+const io = require('../socket');
 const User = require('../models/user');
 const Message = require('../models/message');
 const mongoose = require('mongoose');
