@@ -93,6 +93,8 @@ exports.postMessage = async (req, res, next) => {
 
     const savedMessage = await chatMessage.save();
 
+    io.getIO().emit(savedMessage.reciever.toString(), savedMessage);
+
     return res.status(200).json({
         message: 'Successfuly sent',
         data: savedMessage
