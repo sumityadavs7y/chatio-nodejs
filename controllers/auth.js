@@ -78,8 +78,7 @@ exports.login = async (req, res, next) => {
 
 exports.check = async (req, res, next) => {
 
-    io.getIO().to('mychannel')
-        .emit('message', 'hi, there!');
+    io.getIO().emit('mychannel', 'hi, there!');
 
     return res.status(200).json({
         message: "ACCESSED WITH TOKEN"
